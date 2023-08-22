@@ -16,19 +16,21 @@ Including another URLconf
 """
 from django import views
 from django.contrib import admin
-
-from django.urls import path
-from ImagenesApp.views import CargarArchivoView
+from django.conf import settings
+from django.conf.urls.static import static
+from django.urls import path,include
+# from ImagenesApp.views import CargarArchivoView
 #from ImagenesApp import views
 #from django.conf import settings
 #from django.conf.urls.static import static
 
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('cargar_archivo/', CargarArchivoView.as_view(), name='cargar_archivo'),
-]
+    # path('cargar_archivo/', CargarArchivoView.as_view(), name='cargar_archivo'),
+    # path('', admin.site.urls),
+    path("archivo/", include("ImagenesApp.urls")),
+]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 
 # urls.py
 

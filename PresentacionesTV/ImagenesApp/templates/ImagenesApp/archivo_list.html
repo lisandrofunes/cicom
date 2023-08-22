@@ -1,0 +1,24 @@
+
+
+{% block content %}
+    <h1>Book List</h1>
+
+    {% if archivo_list %}
+    <ul>
+
+      {% for archivo in archivo_list %}
+      <li>
+        <h2>{{ archivo.nombre }}</h2>
+        <img src="{{ archivo.archivo.url }}" style="width: 30px; height: 30px;"/> 
+        {% comment %} <a href="{{ archivo.archivo.url }}" target="_blank">
+            <button>Abrir Imagen</button>
+        </a> {% endcomment %}
+        
+      </li>
+      {% endfor %}
+
+    </ul>
+    {% else %}
+      <p>There are no books in the library.</p>
+    {% endif %}
+{% endblock %}
