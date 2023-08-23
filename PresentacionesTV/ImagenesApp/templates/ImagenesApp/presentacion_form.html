@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-5">
+    <h2>Crear Presentación</h2>
+    <form method="post" id="form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="titulo">Título:</label>
+            <input type="text" class="form-control" id="titulo" name="titulo" required>
+        </div>
+        <div class="form-group">
+            <label for="tiempo">Tiempo:</label>
+            <input type="number" class="form-control" id="tiempo" name="tiempo" required>
+        </div>
+        <div class="form-group">
+
+            
+            <label for="archivos">Archivos:</label>
+
+            <div multiple class="form-control" id="archivos" name="archivos[]" required>
+                {% for archivo in archivos %}
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="archivos[]" value="{{ archivo.id }}">
+                    <label class="form-check-label">{{ archivo.nombre }}</label>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Crear Presentación</button>
+    </form>
+    <script>
+        const form=document.getElementById('form')
+        function onSubmit(e){
+            e.preventDefault()
+            console.log(e);
+        }
+        form.addEventListener('submit', (e) => onSubmit())
+    </script>
+</div>
+{% endblock %}
