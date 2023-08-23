@@ -1,24 +1,43 @@
-
+{% extends 'base.html' %}
 
 {% block content %}
-    <h1>Book List</h1>
+<div class="container" style="padding-top: 16px;">
+    <h1>Lista de archivos</h1>
 
     {% if archivo_list %}
-    <ul>
 
-      {% for archivo in archivo_list %}
-      <li>
-        <h2>{{ archivo.nombre }}</h2>
-        <img src="{{ archivo.archivo.url }}" style="width: 30px; height: 30px;"/> 
-        {% comment %} <a href="{{ archivo.archivo.url }}" target="_blank">
-            <button>Abrir Imagen</button>
-        </a> {% endcomment %}
-        
-      </li>
-      {% endfor %}
+    
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th class="col-4" scope="col">Nombre</th>
+          <th class="col-2" scope="col">Imagen</th>
+          <th class="col-6" scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for archivo in archivo_list %}
+        <tr>
+          <td>{{ archivo.nombre }}</td>
+          <td><img src="{{ archivo.archivo.url }}" style="width: 30px; height: 30px;"/> 
+            {% comment %} <a href="{{ archivo.archivo.url }}" target="_blank">
+                <button>Abrir Imagen</button>
+            </a> {% endcomment %}
+          </td>
+          <td>
+            <button type="button" class="btn btn-dark">Ver imagen</button>
+            <button type="button" class="btn btn-warning">Editar</button>
+            <button type="button" class="btn btn-danger">Eliminar</button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
 
-    </ul>
+
+
     {% else %}
       <p>There are no books in the library.</p>
     {% endif %}
+  </div>
 {% endblock %}

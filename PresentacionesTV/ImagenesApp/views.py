@@ -6,7 +6,17 @@ from django.http import HttpResponse
 from django.views.generic.edit import CreateView
 
 # class CargarArchivoView(View):
-def post(self, request):
+# def post(self, request):
+#         nombre = request.POST.get('nombre')
+#         archivo = request.FILES.get('archivo')  # Obtener el archivo de la solicitud POST
+
+#         nuevo_archivo = Archivo(nombre=nombre, archivo=archivo)
+#         nuevo_archivo.save()
+
+#         return HttpResponse("Archivo cargado exitosamente")
+
+class CargarArchivoView(View):
+    def post(self, request):
         nombre = request.POST.get('nombre')
         archivo = request.FILES.get('archivo')  # Obtener el archivo de la solicitud POST
 
@@ -14,6 +24,11 @@ def post(self, request):
         nuevo_archivo.save()
 
         return HttpResponse("Archivo cargado exitosamente")
+
+    def get(self, request):
+        return render(request, 'cargar_archivo.html')
+
+
 
 
 class ArchivoCreate(CreateView):

@@ -11,7 +11,7 @@ urlpatterns = [
     #  path('', CargarArchivoView.as_view(), name='cargar_archivo'),
     path('create/', views.ArchivoCreate.as_view(), name='archivo-create'),
     path('', views.index, name='index'),
-    path('archivos/', views.ArchivoListView.as_view(), name='archivo'),
+    path('archivos/', views.ArchivoListView.as_view(), name='archivo-list'),
     
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 # if settings.DEBUG:
