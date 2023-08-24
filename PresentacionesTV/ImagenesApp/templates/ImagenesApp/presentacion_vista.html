@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Presentación</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div id="slideshow-container">
+        {% for filename in archivos %}
+            {% set lowercase_filename = filename|lower %}
+            {% if lowercase_filename.endswith('.jpg') or lowercase_filename.endswith('.png') or lowercase_filename.endswith('.jpeg') or lowercase_filename.endswith('.gif') %}
+                <img src="{{ url_for('uploaded_file', filename=filename) }}" style="max-width: 100%; max-height: 100%;">
+            {% elif lowercase_filename.endswith('.mp4') %}
+                <video controls style="max-width: 100%; max-height: 100%;">
+                    <source src="{{ url_for('uploaded_file', filename=filename) }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            {% endif %}
+        {% endfor %}
+    </div>
+    
+    
+    
+    <script>
+        const mediaItems = document.querySelectorAll('#slideshow-container img, #slideshow-container video');
+        const currentIndex = 0;
+    
+        function showMediaItem(index) {
+            // Ocultar todos los elementos de media
+            for (let i = 0; i < mediaItems.length; i++) {
+                mediaItems[i].style.display = 'none';
+            }
+    
+            // Mostrar solo el elemento actual
+            var currentMedia = mediaItems[currentIndex];
+            currentMedia.style.display = 'block';
+    
+            const duration = duracion * 1000; // Duración predeterminada en milisegundos
+    
+            if (currentMedia.tagName === 'VIDEO') {
+                var videoElement = currentMedia;
+    
+                videoElement.currentTime = 0; // Reiniciar el video al principio
+                videoElement.play(); // Reproducir el video automáticamente
+    
+                // Obtener la duración real del video (en segundos) para ajustar la duración de la presentación
+                var videoDuration = videoElement.duration;
+                if (!isNaN(videoDuration) && videoDuration > 0) {
+                    duration = videoDuration * 1000; // Convertir a milisegundos
+                }
+            }
+    
+            setTimeout(function() {
+                // Pasar al siguiente elemento
+                currentIndex = (currentIndex + 1) % mediaItems.length;
+                showMediaItem(currentIndex);
+            }, duration);
+        }
+    
+        // Comenzar la presentación con la primera imagen automáticamente
+        showMediaItem(currentIndex);
+    </script>
+    
+    
+    
+    
+    
+    
+</body>
+</html>
+
+
+
+
+
+

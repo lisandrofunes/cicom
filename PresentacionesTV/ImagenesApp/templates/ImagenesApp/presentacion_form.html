@@ -29,18 +29,20 @@
                     <thead>
                       <tr>
                         <th class="col-1" scope="col"></th>
-                        <th class="col-2" scope="col">Nombre</th>
-                        <th class="col-6" scope="col">Imagen</th>
+                        <th class="col-3" scope="col">Nombre</th>
+                        <th class="col-2" scope="col">Imagen</th>
                       </tr>
                     </thead>
                     <tbody>
                       {% for archivo in archivos %}
-                      <tr>
+                      <tr class="col-auto">
                         <td>
+                          <div >
                             <input type="checkbox" class="form-check-input"  name="archivos[]" value="{{ archivo.id }}">
+                          </div>
                         </td>
                         <td>{{ archivo.nombre }}</td>
-                        <td><img src="{{ archivo.archivo.url }}" style="width: 30px; height: 30px;"/> 
+                        <td><img src="{{ archivo.archivo.url }}" style="width: 60px; height: 60px;" style="object-fit: cover;"/> 
                           {% comment %} <a href="{{ archivo.archivo.url }}" target="_blank">
                               <button>Abrir Imagen</button>
                           </a> {% endcomment %}

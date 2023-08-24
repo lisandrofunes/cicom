@@ -13,6 +13,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('archivos/', views.ArchivoListView.as_view(), name='archivo-list'),
     path('presentacion-create/', views.CrearPresentacionView.as_view(), name='presentacion-create'),
+    path('presentacion-vista/<str:titulo>', views.MostrarPresentacionView.as_view(), name='presentacion-vista'),
     
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 # if settings.DEBUG:

@@ -77,3 +77,20 @@ from django.views import generic
 class ArchivoListView(generic.ListView):
     model = Archivo
  
+class MostrarPresentacionView(View):
+    def get(self, request, titulo):
+        try:
+            presentacion = Presentacion.objects.get(titulo=titulo)
+        except Presentacion.DoesNotExist:
+            return HttpResponse("La presentación no existe")
+
+        detalles = DetallePresentacion.objects.filter(presentacion=presentacion).order_by('orden')
+        archivos = [detalle.archivo for detalle in detalles]
+
+        context = {
+            'presentacion': presentacion,
+            'archivos': archivos,
+            'duracion': presentacion.tiempo
+        }
+
+        return render(request, 'ImagenesApp/presentacion_vista.html', context)
