@@ -5,23 +5,66 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <div id="slideshow-container">
-        {% for filename in archivos %}
-            {% set lowercase_filename = filename|lower %}
-            {% if lowercase_filename.endswith('.jpg') or lowercase_filename.endswith('.png') or lowercase_filename.endswith('.jpeg') or lowercase_filename.endswith('.gif') %}
-                <img src="{{ url_for('uploaded_file', filename=filename) }}" style="max-width: 100%; max-height: 100%;">
-            {% elif lowercase_filename.endswith('.mp4') %}
-                <video controls style="max-width: 100%; max-height: 100%;">
-                    <source src="{{ url_for('uploaded_file', filename=filename) }}" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            {% endif %}
-        {% endfor %}
+
+
+    <div id="presentacion_vistas">
+
+
     </div>
     
     
     
     <script>
+        const duracion = "{{tiempo}}"
+        const divPresentacion = document.getElementById("presentacion_vistas")
+        const media = "{%for archivo in archivos%}{{archivo.archivo.url}},{%endfor%}".split(",").filter(a=>a);
+
+
+        function diferenciarArchivos(archivo){
+            const formato_imagenes = [".png",".jpg",".jpeg",".gif"]
+            const esImagen = formato_imagenes.some(formato=>
+            {const terminaCon=archivo.endsWith(formato)
+                console.log(terminaCon)
+                return terminaCon
+            })
+            
+            if (esImagen){
+                return "imagen"
+                
+            }else{
+                return "video"
+            }
+            
+        }
+
+
+
+        function render(media){
+            for (archivo in media){
+                console.log(diferenciarArchivos(archivo))
+                if (diferenciarArchivos(archivo)==="imagen"){
+                    console.log("xx")
+                    setTimeout(()=>{
+                        const templateImagen=document.createElement("img",{src:archivo})
+                        console.log(templateImagen)
+                        divPresentacion.appendChild(templateImagen)
+                    },duracion*1000)
+
+                }
+            }
+
+            
+
+
+        }
+
+        function clean(){
+            divPresentacion.childNodes.forEach(child=>child.remove())
+        }
+   
+        function createTemplate(){
+
+        }
         const mediaItems = document.querySelectorAll('#slideshow-container img, #slideshow-container video');
         const currentIndex = 0;
     
@@ -35,7 +78,7 @@
             var currentMedia = mediaItems[currentIndex];
             currentMedia.style.display = 'block';
     
-            const duration = duracion * 1000; // Duración predeterminada en milisegundos
+            const duracion = duracion * 1000; // Duración predeterminada en milisegundos
     
             if (currentMedia.tagName === 'VIDEO') {
                 var videoElement = currentMedia;
@@ -58,7 +101,8 @@
         }
     
         // Comenzar la presentación con la primera imagen automáticamente
-        showMediaItem(currentIndex);
+        //showMediaItem(currentIndex);
+        render(media)
     </script>
     
     
